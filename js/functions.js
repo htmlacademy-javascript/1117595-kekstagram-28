@@ -7,7 +7,7 @@ checkLength('Привет как дела', 20); // будет true
 
 // проверка строки палиндрома (как это будет применяться в будущем)
 
-function isPalindrome(string) {
+const isPalindrome = (string) => {
   const tempString = string
     .toLowerCase()
     .replaceAll(' ', '');
@@ -17,32 +17,32 @@ function isPalindrome(string) {
     reverseString += tempString.at(i);
   }
   return tempString === reverseString;
-}
+};
 
 isPalindrome('Лёша на полке клопа нашёл '); // будет true
 
 
 // извлечение числа из строки
 
-function extractNumber(string) {
+const extractNumber = (string) => {
   if (typeof string === 'number') {
     return string;
   }
-  let result = '';//почему надо класть строку в переменную чтобы потом преобразовывать обратно в число?
+  let result = '';
   for (let i = 0; i < string.length; i++) {
     if (!Number.isNaN(parseInt(string.at(i), 10))) {
       result += string.at(i);
     }
   }
-  return parseInt(result, 10);
-}
+  return Math.abs(parseInt(result, 10));
+};
 
-extractNumber('сейчес 2023 год'); // вернёт 2023
+extractNumber('сейчес -2023,5 год'); // вернёт 20235
 
 
 // добавляем символы строке
 
-function addSymbol(string, minLength, extraSymbols) {
+const addSymbol = (string, minLength, extraSymbols) => {
   let result = string;
 
   while (result.length < minLength) {
@@ -52,7 +52,7 @@ function addSymbol(string, minLength, extraSymbols) {
     result = actualExtraSymbols + result;
   }
   return result;
-}
+};
 
 addSymbol('qwerty', 4, '0'); // вернет qwerty
 
