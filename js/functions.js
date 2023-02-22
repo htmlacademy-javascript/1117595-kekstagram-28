@@ -1,0 +1,72 @@
+// проверка длинны строки
+
+const checkLength = (string, length) => string.length <= length;
+
+checkLength('Привет как дела', 20); // будет true
+
+
+// проверка строки палиндрома (как это будет применяться в будущем)
+
+function isPalindrome(string) {
+  const tempString = string
+    .toLowerCase()
+    .replaceAll(' ', '');
+
+  let reverseString = '';
+  for (let i = tempString.length - 1; i >= 0; i--) {
+    reverseString += tempString.at(i);
+  }
+  return tempString === reverseString;
+}
+
+isPalindrome('Лёша на полке клопа нашёл '); // будет true
+
+
+// извлечение числа из строки
+
+function extractNumber(string) {
+  if (typeof string === 'number') {
+    return string;
+  }
+  let result = '';//почему надо класть строку в переменную чтобы потом преобразовывать обратно в число?
+  for (let i = 0; i < string.length; i++) {
+    if (!Number.isNaN(parseInt(string.at(i), 10))) {
+      result += string.at(i);
+    }
+  }
+  return parseInt(result, 10);
+}
+
+extractNumber('сейчес 2023 год'); // вернёт 2023
+
+
+// добавляем символы строке
+
+function addSymbol(string, minLength, extraSymbols) {
+  let result = string;
+
+  while (result.length < minLength) {
+    const newResultLength = result.length + extraSymbols.length;
+    const actualExtraSymbols = newResultLength <= minLength ? extraSymbols :
+      extraSymbols.slice(0, minLength - newResultLength);
+    result = actualExtraSymbols + result;
+  }
+  return result;
+}
+
+addSymbol('qwerty', 4, '0'); // вернет qwerty
+
+
+/* function addSymbols(string, minLength, extraSymbols) {
+  const actualSymbols = minLength - string.length;
+
+  if (actualSymbols <= 0) {
+    return string;
+  }
+
+  return extraSymbols.slice(0, actualSymbols % extraSymbols.length)
+    + extraSymbols.repeat(actualSymbols / extraSymbols.length) + string;
+}
+
+addSymbols('1', 2, '0'); //вернёт 01
+*/
