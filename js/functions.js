@@ -54,19 +54,4 @@ const addSymbol = (string, minLength, extraSymbols) => {
   return result;
 };
 
-addSymbol('qwerty', 4, '0'); // вернет qwerty
-
-
-/* function addSymbols(string, minLength, extraSymbols) {
-  const actualSymbols = minLength - string.length;
-
-  if (actualSymbols <= 0) {
-    return string;
-  }
-
-  return extraSymbols.slice(0, actualSymbols % extraSymbols.length)
-    + extraSymbols.repeat(actualSymbols / extraSymbols.length) + string;
-}
-
-addSymbols('1', 2, '0'); //вернёт 01
-*/
+addSymbol('qwerty', 4, '0');

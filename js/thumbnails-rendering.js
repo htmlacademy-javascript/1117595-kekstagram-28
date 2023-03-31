@@ -1,24 +1,23 @@
-import { createPhotos } from './data.js';
+const pictureContainer = document.querySelector('.pictures');
+const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-const pictureContainer = document.querySelector('.picture');
-const pictureTemplate = document.querySelector('#picture')
-  .content
-  .querySelector('.picture');
+const createElement = ({url, comment, likes, id}) => {
+  const pictureClone = pictureTemplate.cloneNode(true);
+  pictureClone.querySelector('.picture__img').src = url;
+  pictureClone.querySelector('.picture__comments').textContent = comment.length;
+  pictureClone.querySelector('.picture__likes').textContent = likes;
+  pictureClone.querySelector('.picture__img').dataset.pictureCloneId = id;
+  return pictureClone;
+};
 
-const picturesFragment = document.createDocumentFragment();
+const renderThumbnails = (photos) => {
+  const pictureFragment = document.createDocumentFragment();
+  photos.forEach((element) => {
+    const thumbnail = createElement(element);
+    pictureFragment.append(thumbnail);
+  });
 
-const renderedThumbnails = createPhotos();
+  pictureContainer.append(pictureFragment);
+};
 
-renderedThumbnails.forEach((photo) => {
-  const pictureElement = pictureTemplate.cloneNode(true);
-
-  pictureElement.querySelector('.picture__img').src = photo.url;
-  pictureElement.querySelector('.picture__likes').textContent = photo.likes;
-  pictureElement.querySelector('.picture__comments').textContent = photo.comment.length;
-
-  picturesFragment.append(pictureElement);
-});
-
-pictureContainer.append(picturesFragment);
-
-export { renderedThumbnails };
+export { renderThumbnails };
