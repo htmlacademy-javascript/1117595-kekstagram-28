@@ -28,9 +28,9 @@ const fillComment = ({ avatar, message, name }) => {
 
 const renderComments = (comments) => {
   socialComments.innerHTML = '';
-  // const socialFragment = document.createDocumentFragment();
-  socialComments.append(...comments.map(fillComment));
-  // socialComments.append(socialFragment);
+  const socialFragment = document.createDocumentFragment();
+  socialFragment.append(...comments.map(fillComment));
+  socialComments.append(socialFragment);
 };
 
 const renderFiveComments = () => {
