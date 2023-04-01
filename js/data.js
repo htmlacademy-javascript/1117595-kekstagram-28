@@ -64,7 +64,7 @@ const createPhotoDescription = () => {
 
   return {
     id: createPhotoId(),
-    url: `photos/${createPhotoNumber()}'.jpg`,
+    url: `photos/${createPhotoNumber()}.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS),
     likes: getRandomInteger(LIKE_COUNT_MIN, LIKE_COUNT_MAX),
     comment: photoComment
@@ -74,3 +74,4 @@ const createPhotoDescription = () => {
 const createPhotos = () => Array.from({ length: PHOTO_COUNT }, createPhotoDescription);
 
 export { createPhotos };
+
