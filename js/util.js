@@ -34,11 +34,18 @@ const createRandomIdFromRange = (min, max) => {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
+const stopEventPropagation = (evt) => {
+  if (evt.key === 'Escape') {
+    evt.stopPropagation();
+  }
+};
+
 export {
   getRandomInteger,
   getRandomArrayElement,
   createIdGenerator,
   createRandomIdFromRange,
-  isEscapeKey
+  isEscapeKey,
+  stopEventPropagation
 };
 
