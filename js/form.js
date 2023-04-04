@@ -1,4 +1,6 @@
-import { isEscapeKey, stopEventPropagation } from './util.js';
+import { isEscapeKey, onInputKeydown } from './util.js';
+import { removeScale } from './scale.js';
+import { removeEffects } from './slider.js';
 
 const MAX_HASHTAGS_COUNT = 5;
 const ERROR_TEXT = 'Введите до 5-ти хештегов, каждый длинною до 20ти символов, первый символ всегда # далее буквы или цифры.';
@@ -39,28 +41,30 @@ form.addEventListener('submit', (evt) => {
   pristine.validate();
 });
 
-const closeImgUploadOverlay = () => {
+const onCloseButtonClick = () => {
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   form.reset();
   pristine.reset();
+  removeScale();
+  removeEffects();
 };
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    closeImgUploadOverlay();
+    onCloseButtonClick();
     document.removeEventListener('keydown', onDocumentKeydown);
   }
 };
 
-const showImgUploadOverlay = () => {
+const onFileUploadChange = () => {
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
-textHashtags.addEventListener('keydown', stopEventPropagation);
-textDescription.addEventListener('keydown', stopEventPropagation);
-uploadFile.addEventListener('change', showImgUploadOverlay);
-imgUploadCancel.addEventListener('click', closeImgUploadOverlay);
+textHashtags.addEventListener('keydown', onInputKeydown);
+textDescription.addEventListener('keydown', onInputKeydown);
+uploadFile.addEventListener('change', onFileUploadChange);
+imgUploadCancel.addEventListener('click', onCloseButtonClick);
