@@ -34,7 +34,7 @@ const createRandomIdFromRange = (min, max) => {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-const stopEventPropagation = (evt) => {
+const onInputKeydown = (evt) => {
   if (evt.key === 'Escape') {
     evt.stopPropagation();
   }
@@ -46,6 +46,6 @@ export {
   createIdGenerator,
   createRandomIdFromRange,
   isEscapeKey,
-  stopEventPropagation
+  onInputKeydown
 };
 
