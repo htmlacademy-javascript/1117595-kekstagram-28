@@ -1408,3 +1408,19 @@ main {
 .hidden {
   display: none;
 }
+
+.error-message {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    z-index: 100;
+    padding: 15px 5px;
+    text-align: center;
+    background-color: tomato;
+}
+
+.success__title {
+  font-size: 22px;
+  margin: 0;
+}
