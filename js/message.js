@@ -19,7 +19,7 @@ const closePopup = () => {
 };
 
 function onDocumentKeydown (evt) {
-  if(isEscapeKey(evt)) {
+  if (isEscapeKey(evt)) {
     evt.preventDefault();
     closePopup();
   }

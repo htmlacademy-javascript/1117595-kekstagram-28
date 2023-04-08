@@ -11,15 +11,15 @@ const openPopup = () => {
 const closePopup = () => {
   bigPictureContainer.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
+  document.removeEventListener('keydown', onDocumentKeydown);
 };
 
-const onDocumentKeydown = (evt) => {
+function onDocumentKeydown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closePopup();
     document.removeEventListener('keydown', onDocumentKeydown);
   }
-};
+}
 
 export { openPopup, closePopup, onDocumentKeydown };
-
