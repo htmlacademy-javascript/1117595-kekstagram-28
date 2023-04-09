@@ -50,11 +50,11 @@ const renderFiveComments = () => {
   totalCommentsCount.textContent = moduleComments.length;
 };
 
-const renderBigPicture = ({url, likes, comment}) => {
+const renderBigPicture = ({url, likes, comments}) => {
   shownComments = 0;
   image.src = url;
   likesCount.textContent = likes;
-  moduleComments = comment;
+  moduleComments = comments;
   renderFiveComments();
 };
 

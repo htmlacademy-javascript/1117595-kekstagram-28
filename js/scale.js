@@ -2,6 +2,7 @@ const START_VALUE = 100;
 const MIN_SCALE = 25;
 const MAX_SCALE = 100;
 const STEP_SCALE = 25;
+const PROCENT_SCALE = 100;
 
 const scaleContainer = document.querySelector('.img-upload__scale');
 const control = scaleContainer.querySelector('.scale__control--value');
@@ -13,7 +14,7 @@ let startScaleValue = START_VALUE;
 
 const resizePhoto = () => {
   control.value = `${startScaleValue}%`;
-  photo.style.transform = `scale(${startScaleValue / 100})`;
+  photo.style.transform = `scale(${startScaleValue / PROCENT_SCALE})`;
 };
 
 controlSmaller.addEventListener('click', () => {
@@ -32,7 +33,7 @@ controlBigger.addEventListener('click', () => {
 
 const removeScale = () => {
   startScaleValue = MAX_SCALE;
-  photo.style.transform = `scale(${START_VALUE / 100})`;
+  photo.style.transform = `scale(${START_VALUE / PROCENT_SCALE})`;
   control.value = `${START_VALUE}%`;
 };
 

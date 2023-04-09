@@ -1,4 +1,4 @@
-const Effects = {
+const effects = {
   none: {
     name: 'none',
     style: 'none',
@@ -55,8 +55,8 @@ const Effects = {
   },
 };
 
-const defaultEffect = Effects.none;
-let chosenEffect = Effects.none;
+const defaultEffect = effects.none;
+let chosenEffect = effects.none;
 const sliderContainer = document.querySelector('.img-upload__effect-level');
 const sliderElement = document.querySelector('.effect-level__slider');
 const image = document.querySelector('.img-upload__preview img');
@@ -76,8 +76,6 @@ noUiSlider.create(sliderElement, {
   connect: 'lower',
 });
 
-hideSlider();
-
 const changeEffect = () => {
   sliderElement.noUiSlider.updateOptions({
     range: {
@@ -92,8 +90,8 @@ const changeEffect = () => {
 };
 
 effectButtonsList.addEventListener('click',(evt) => {
-  if(evt.target.closest('.effects__radio')) {
-    chosenEffect = Effects[evt.target.value];
+  if (evt.target.closest('.effects__radio')) {
+    chosenEffect = effects[evt.target.value];
     image.className = `effects__preview--${chosenEffect.name}`;
     changeEffect();
   }
@@ -101,8 +99,8 @@ effectButtonsList.addEventListener('click',(evt) => {
 
 const onSliderChange = () => {
   const sliderValue = sliderElement.noUiSlider.get();
-  if(chosenEffect === defaultEffect) {
-    image.style.filter = 'none';
+  if (chosenEffect === defaultEffect) {
+    image.style.filter = effects.none;
   } else {
     image.style.filter = `${chosenEffect.style}(${sliderValue}${chosenEffect.unit})`;
   }
@@ -115,5 +113,7 @@ const removeEffects = () => {
   chosenEffect = defaultEffect;
   changeEffect();
 };
+
+hideSlider();
 
 export { removeEffects };

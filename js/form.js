@@ -1,6 +1,8 @@
 import { isEscapeKey, onInputKeydown } from './util.js';
 import { removeScale } from './scale.js';
 import { removeEffects } from './slider.js';
+import { sendData } from './api.js';
+import { openFormPopup, errorMessage, successMessage, onOutsideClick } from './message.js';
 
 const MAX_HASHTAGS_COUNT = 5;
 const ERROR_TEXT = 'Введите до 5-ти хештегов, каждый длинною до 20ти символов, первый символ всегда # далее буквы или цифры.';
@@ -12,6 +14,7 @@ const textDescription = form.querySelector('.text__description');
 const uploadFile = document.querySelector('#upload-file');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const imgUploadCancel = form.querySelector('.img-upload__cancel');
+const submitButton = form.querySelector('.img-upload__submit');
 
 const pristine = new Pristine (form, {
   classTo: 'img-upload__field-wrapper',
@@ -36,11 +39,6 @@ const validateHashtags = (value) => {
 
 pristine.addValidator(textHashtags, validateHashtags, ERROR_TEXT);
 
-form.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-});
-
 const onCloseButtonClick = () => {
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
@@ -48,21 +46,56 @@ const onCloseButtonClick = () => {
   pristine.reset();
   removeScale();
   removeEffects();
+  document.removeEventListener('keydown', onDocumentKeydown);
+  document.removeEventListener('click', onOutsideClick);
 };
 
-const onDocumentKeydown = (evt) => {
+function onDocumentKeydown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    onCloseButtonClick();
-    document.removeEventListener('keydown', onDocumentKeydown);
+    if (document.querySelector('.error') === null) {
+      onCloseButtonClick();
+    }
   }
-};
+}
 
 const onFileUploadChange = () => {
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
 };
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+};
+
+const setUserFormSubmit = (onSuccess) => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+
+    if (isValid) {
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(onSuccess)
+        .then(() => {
+          openFormPopup(successMessage);
+        })
+        .catch(
+          () => {
+            openFormPopup(errorMessage);
+          }
+        )
+        .finally(unblockSubmitButton);
+    }
+  });
+};
+
+setUserFormSubmit(onCloseButtonClick);
 
 textHashtags.addEventListener('keydown', onInputKeydown);
 textDescription.addEventListener('keydown', onInputKeydown);
