@@ -12,6 +12,11 @@ const createElement = ({url, comments, likes, id}) => {
 
 const renderThumbnails = (photos) => {
   const pictureFragment = document.createDocumentFragment();
+  const pictures = document.querySelectorAll('.picture');
+  pictures.forEach((element) => {
+    element.remove();
+  });
+
   photos.forEach((element) => {
     const thumbnail = createElement(element);
     pictureFragment.append(thumbnail);
