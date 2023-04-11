@@ -1,5 +1,7 @@
 import { isEscapeKey } from './util.js';
 
+const MESSAGE_TIMEOUT = 5000;
+
 const errorMessage = document.querySelector('#error')
   .content
   .querySelector('.error');
@@ -53,7 +55,7 @@ const showErrorText = () => {
 
   setTimeout(() => {
     alertContainer.remove();
-  }, 5000);
+  }, MESSAGE_TIMEOUT);
 };
 
 export {

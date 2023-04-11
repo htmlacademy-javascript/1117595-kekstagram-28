@@ -1,19 +1,15 @@
-import { renderThumbnails } from './thumbnails-rendering.js';
-
 const PHOTO_COUNT = 10;
-const RERENDER_DELAY = 500;
+const Filter = {
+  DEFAULT: 'filter-default',
+  RANDOM: 'filter-random',
+  DISCUSSED: 'filter-discussed'
+};
+
+let currentFilter = Filter.DEFAULT;
+let pictures = [];
 
 const filterContainer = document.querySelector('.img-filters');
 
-const debounce = (callback, timeoutDelay) => {
-  let timeoutId;
-  return (...rest) => {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
-  };
-};
-
-filterContainer.classList.remove('img-filters--inactive');
 
 const sortRandomly = () => Math.random() - 0.5;
 
@@ -26,26 +22,32 @@ const changeActiveClass = (evt) => {
   }
 };
 
-const getFilteredPhotos = (id, photos) => {
-  switch (id) {
-    case 'filter-default':
-      return [...photos];
-    case 'filter-random':
-      return [...photos].sort(sortRandomly).slice(0, PHOTO_COUNT);
-    case 'filter-discussed':
-      return [...photos].sort(sortByComments);
+const getFilteredPhotos = () => {
+  switch (currentFilter) {
+    case Filter.RANDOM:
+      return [...pictures].sort(sortRandomly).slice(0, PHOTO_COUNT);
+    case Filter.DISCUSSED:
+      return [...pictures].sort(sortByComments);
+    default:
+      return [...pictures];
   }
 };
 
-const sortPhoto = (photos) => {
+const setOnFilterClick = (callback) => {
   filterContainer.addEventListener('click', (evt) => {
-    if(evt.target.matches('button')) {
+    if (evt.target.matches('button')) {
       changeActiveClass(evt);
-      const filteredData = getFilteredPhotos(evt.target.id, photos);
-      const debouncedRenderGallery = debounce(renderThumbnails, RERENDER_DELAY);
-      debouncedRenderGallery(filteredData);
+
+      currentFilter = evt.target.id;
+      callback(getFilteredPhotos());
     }
   });
 };
 
-export { sortPhoto };
+const init = (loadedPictures, cb) => {
+  filterContainer.classList.remove('img-filters--inactive');
+  pictures = [...loadedPictures];
+  setOnFilterClick(cb);
+};
+
+export { getFilteredPhotos, init };
