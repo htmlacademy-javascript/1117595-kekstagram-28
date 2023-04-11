@@ -17,6 +17,12 @@ const resizePhoto = () => {
   photo.style.transform = `scale(${startScaleValue / PROCENT_SCALE})`;
 };
 
+const removeScale = () => {
+  startScaleValue = MAX_SCALE;
+  photo.style.transform = `scale(${START_VALUE / PROCENT_SCALE})`;
+  control.value = `${START_VALUE}%`;
+};
+
 controlSmaller.addEventListener('click', () => {
   if (startScaleValue !== MIN_SCALE) {
     startScaleValue -= STEP_SCALE;
@@ -30,11 +36,5 @@ controlBigger.addEventListener('click', () => {
   }
   resizePhoto(controlSmaller);
 });
-
-const removeScale = () => {
-  startScaleValue = MAX_SCALE;
-  photo.style.transform = `scale(${START_VALUE / PROCENT_SCALE})`;
-  control.value = `${START_VALUE}%`;
-};
 
 export { removeScale };
