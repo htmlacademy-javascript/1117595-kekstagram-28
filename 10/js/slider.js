@@ -100,7 +100,7 @@ effectButtonsList.addEventListener('click',(evt) => {
 const onSliderChange = () => {
   const sliderValue = sliderElement.noUiSlider.get();
   if (chosenEffect === defaultEffect) {
-    image.style.filter = effects.none;
+    image.style.filter = effects.none.name;
   } else {
     image.style.filter = `${chosenEffect.style}(${sliderValue}${chosenEffect.unit})`;
   }

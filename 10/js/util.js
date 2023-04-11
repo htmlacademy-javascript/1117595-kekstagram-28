@@ -40,12 +40,21 @@ const onInputKeydown = (evt) => {
   }
 };
 
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
 export {
   getRandomInteger,
   getRandomArrayElement,
   createIdGenerator,
   createRandomIdFromRange,
   isEscapeKey,
-  onInputKeydown
+  onInputKeydown,
+  debounce
 };
 
