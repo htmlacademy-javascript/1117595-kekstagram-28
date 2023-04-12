@@ -1,7 +1,7 @@
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const onInputKeydown = (evt) => {
-  if (evt.key === 'Escape') {
+  if (isEscapeKey(evt)) {
     evt.stopPropagation();
   }
 };
