@@ -61,6 +61,10 @@ const renderBigPicture = ({url, likes, comments, description}) => {
   renderFiveComments();
 };
 
-commentsLoader.addEventListener('click', renderFiveComments);
+const onLoaderClick = () => {
+  renderFiveComments();
+};
+
+commentsLoader.addEventListener('click', onLoaderClick);
 
 export { renderBigPicture };
