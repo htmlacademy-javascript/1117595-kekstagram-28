@@ -82,8 +82,8 @@ const changeEffect = () => {
 
 const onSliderChange = () => {
   const sliderValue = sliderElement.noUiSlider.get();
-  image.style.filter = image.style.filter = chosenEffect === defaultEffect ?
-    effects.none.name : `${chosenEffect.style}(${sliderValue}${chosenEffect.unit})`;
+  image.style.filter = chosenEffect === defaultEffect ? effects.none.name :
+    `${chosenEffect.style}(${sliderValue}${chosenEffect.unit})`;
 
   effectsValue.value = sliderValue;
 };
