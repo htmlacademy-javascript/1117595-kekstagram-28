@@ -1,5 +1,7 @@
 import { isEscapeKey } from './util.js';
 
+const MESSAGE_TIMEOUT = 5000;
+
 const errorMessage = document.querySelector('#error')
   .content
   .querySelector('.error');
@@ -12,7 +14,7 @@ const errorAlert = document.querySelector('#error-message')
   .content
   .querySelector('.error-message');
 
-const closePopup = () => {
+const onCloseButtonClick = () => {
   const popup = document.querySelector('.error, .success');
   popup.remove();
   document.removeEventListener('keydown', onDocumentKeydown);
@@ -21,14 +23,14 @@ const closePopup = () => {
 function onDocumentKeydown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    closePopup();
+    onCloseButtonClick();
   }
 }
 
 function onOutsideClick (evt) {
   const popup = document.querySelector('.error, .success');
   if (evt.target === popup) {
-    closePopup();
+    onCloseButtonClick();
   }
   document.removeEventListener('click', onOutsideClick);
 }
@@ -44,7 +46,7 @@ const openFormPopup = (element) => {
   document.addEventListener('click', onOutsideClick);
 
   const popupButton = document.querySelector('.error__button, .success__button');
-  popupButton.addEventListener('click', closePopup);
+  popupButton.addEventListener('click', onCloseButtonClick);
 };
 
 const showErrorText = () => {
@@ -53,7 +55,7 @@ const showErrorText = () => {
 
   setTimeout(() => {
     alertContainer.remove();
-  }, 5000);
+  }, MESSAGE_TIMEOUT);
 };
 
 export {

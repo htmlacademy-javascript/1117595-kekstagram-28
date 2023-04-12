@@ -12,6 +12,7 @@ const commentTemplate = document.querySelector('#comment').content
 
 const image = bigPicture.querySelector('img');
 const likesCount = bigPicture.querySelector('.likes-count');
+const socialCaption = bigPicture.querySelector('.social__caption');
 
 let moduleComments = [];
 let shownComments = 0;
@@ -50,10 +51,12 @@ const renderFiveComments = () => {
   totalCommentsCount.textContent = moduleComments.length;
 };
 
-const renderBigPicture = ({url, likes, comments}) => {
+const renderBigPicture = ({url, likes, comments, description}) => {
   shownComments = 0;
   image.src = url;
+  image.alt = description;
   likesCount.textContent = likes;
+  socialCaption.textContent = description;
   moduleComments = comments;
   renderFiveComments();
 };

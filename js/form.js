@@ -39,7 +39,7 @@ const validateHashtags = (value) => {
 
 pristine.addValidator(textHashtags, validateHashtags, ERROR_TEXT);
 
-const onCloseButtonClick = () => {
+const closeModal = () => {
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   form.reset();
@@ -50,11 +50,15 @@ const onCloseButtonClick = () => {
   document.removeEventListener('click', onOutsideClick);
 };
 
+const onCloseButtonClick = () => {
+  closeModal();
+};
+
 function onDocumentKeydown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     if (document.querySelector('.error') === null) {
-      onCloseButtonClick();
+      closeModal();
     }
   }
 }

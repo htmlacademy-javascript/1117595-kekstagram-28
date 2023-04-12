@@ -66,15 +66,6 @@ const effectsValue = document.querySelector('.effect-level__value');
 const showSlider = () => sliderContainer.classList.remove('hidden');
 const hideSlider = () => sliderContainer.classList.add('hidden');
 
-noUiSlider.create(sliderElement, {
-  range: {
-    min: defaultEffect.min,
-    max: defaultEffect.max,
-  },
-  start: defaultEffect.start,
-  step: defaultEffect.step,
-  connect: 'lower',
-});
 
 const changeEffect = () => {
   sliderElement.noUiSlider.updateOptions({
@@ -89,6 +80,31 @@ const changeEffect = () => {
   (chosenEffect === defaultEffect ? hideSlider : showSlider)();
 };
 
+const onSliderChange = () => {
+  const sliderValue = sliderElement.noUiSlider.get();
+  if (chosenEffect === defaultEffect) {
+    image.style.filter = effects.none.name;
+  } else {
+    image.style.filter = `${chosenEffect.style}(${sliderValue}${chosenEffect.unit})`;
+  }
+  effectsValue.value = sliderValue;
+};
+
+const removeEffects = () => {
+  chosenEffect = defaultEffect;
+  changeEffect();
+};
+
+noUiSlider.create(sliderElement, {
+  range: {
+    min: defaultEffect.min,
+    max: defaultEffect.max,
+  },
+  start: defaultEffect.start,
+  step: defaultEffect.step,
+  connect: 'lower',
+});
+
 effectButtonsList.addEventListener('click',(evt) => {
   if (evt.target.closest('.effects__radio')) {
     chosenEffect = effects[evt.target.value];
@@ -97,22 +113,7 @@ effectButtonsList.addEventListener('click',(evt) => {
   }
 });
 
-const onSliderChange = () => {
-  const sliderValue = sliderElement.noUiSlider.get();
-  if (chosenEffect === defaultEffect) {
-    image.style.filter = effects.none;
-  } else {
-    image.style.filter = `${chosenEffect.style}(${sliderValue}${chosenEffect.unit})`;
-  }
-  effectsValue.value = sliderValue;
-};
-
 sliderElement.noUiSlider.on('update', onSliderChange);
-
-const removeEffects = () => {
-  chosenEffect = defaultEffect;
-  changeEffect();
-};
 
 hideSlider();
 
